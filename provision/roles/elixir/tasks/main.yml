@@ -1,0 +1,10 @@
+- name: install required packages
+  yum: pkg={{item}} state=installed
+  with_items:
+    - unzip
+- name: get elixir src
+  get_url: url="https://github.com/elixir-lang/elixir/releases/download/v1.1.1/Precompiled.zip" dest=/tmp
+- name: unzip src
+  command: unzip /tmp/Precompiled.zip
+- name: export elixir
+  shell: export PATH="PATH=/opt/elixir/bin:$PATH"

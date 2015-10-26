@@ -1,0 +1,10 @@
+- hosts: vagrant
+  sudo: true
+  user: vagrant
+  tasks:
+    - name: git
+      yum: name=git update_cache=yes state=latest
+  roles:
+    - role: nginx
+    - role: erlang
+    - role: elixir

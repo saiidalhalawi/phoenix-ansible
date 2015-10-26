@@ -1,0 +1,17 @@
+- name: install required packages
+  yum: pkg={{item}} state=installed
+  with_items:
+    - gcc
+    - glibc-devel
+    - make
+    - ncurses-devel
+    - openssl-devel
+    - autoconf
+- name: Install EPEL Repository
+  yum: name=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm state=present
+
+- name: Install REMI Repository
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-6.rpm state=present
+
+- name: Install Erlang
+  yum: name=erlang state=present
