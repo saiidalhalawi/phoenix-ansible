@@ -8,3 +8,5 @@
     - role: nginx
     - role: erlang
     - role: elixir
+    - role: phoenix
+    - role: nodejs

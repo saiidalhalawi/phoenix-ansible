@@ -8,7 +8,7 @@
     - openssl-devel
     - autoconf
 - name: check whether the source file exists, or not
-  command: ls -l /var/tmp/otp_src_18.0.tar.gz.tar.gz
+  command: ls -l /var/tmp/otp_src_18.0.tar.gz
   ignore_errors: yes
   register: arleady_exists
 - name: get source
