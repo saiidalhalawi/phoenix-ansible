@@ -18,17 +18,18 @@
   command: chdir=/var/tmp/ tar zxvf otp_src_18.0.tar.gz
   when: arleady_exists|failed
 - name: check whether erlang had been installed, or not
-  command: which elixir
+  command: which erl
   ignore_errors: yes
   register: arleady_installed
 - name: move source files
-  command: mv /var/tmp/otp_src_18.0 /usr/local/src/otp_src_18.0
+  command: cp /var/tmp/otp_src_18.0 /usr/local/src/otp_src_18.0
+  when: arleady_installed == "/usr/local/bin/erl"
 - name: configure erlang
   command: chdir=/usr/local/src/otp_src_18.0 ./configure
-  when: arleady_installed|failed
+  when: arleady_installed == "/usr/local/bin/erl"
 - name: make elixir
   command: chdir=/usr/local/src/otp_src_18.0 make
-  when: arleady_installed|failed
+  when: arleady_installed == "/usr/local/bin/erl"
 - name: configure erlang
   command: chdir=/usr/local/src/otp_src_18.0 make install
-  when: arleady_installed|failed
+  when: arleady_installed == "/usr/local/bin/erl"

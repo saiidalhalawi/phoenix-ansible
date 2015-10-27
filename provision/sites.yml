@@ -1,5 +1,6 @@
 - hosts: vagrant
-  sudo: true
+  become: yes
+  become_user: root
   user: vagrant
   tasks:
     - name: git

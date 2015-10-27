@@ -2,9 +2,16 @@
   yum: pkg={{item}} state=installed
   with_items:
     - unzip
+- name: check whether the source file exists, or not
+  command: ls -l /tmp/Precompiled.zip
+  ignore_errors: yes
+  register: arleady_exists
 - name: get elixir src
   get_url: url="https://github.com/elixir-lang/elixir/releases/download/v1.1.1/Precompiled.zip" dest=/tmp
+  when: arleady_exists|failed
 - name: unzip src
   command: unzip /tmp/Precompiled.zip
+  when: arleady_exists|failed
 - name: export elixir
   shell: export PATH="PATH=/opt/elixir/bin:$PATH"
+  when: arleady_exists|failed
