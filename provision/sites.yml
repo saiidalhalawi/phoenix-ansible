@@ -1,10 +1,10 @@
 - hosts: vagrant
-  become: yes
-  become_user: root
   user: vagrant
   tasks:
     - name: git
       yum: name=git update_cache=yes state=latest
+      become: true
+      become_method: sudo
   roles:
     - role: nginx
     - role: erlang

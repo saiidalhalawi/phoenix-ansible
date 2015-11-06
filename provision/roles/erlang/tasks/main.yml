@@ -1,5 +1,7 @@
 - name: install required packages
   yum: pkg={{item}} state=installed
+  become: true
+  become_method: sudo
   with_items:
     - gcc
     - glibc-devel
@@ -8,13 +10,19 @@
     - openssl-devel
     - autoconf
 - name: check whether the source file exists, or not
+  become: true
+  become_method: sudo
   command: ls -l /var/tmp/otp_src_18.0.tar.gz
   ignore_errors: yes
   register: arleady_exists
 - name: get source
+  become: true
+  become_method: sudo
   get_url: url=http://www.erlang.org/download/otp_src_18.0.tar.gz dest=/var/tmp/
   when: arleady_exists|failed
 - name: unzip source
+  become: true
+  become_method: sudo
   command: chdir=/var/tmp/ tar zxvf otp_src_18.0.tar.gz
   when: arleady_exists|failed
 - name: check whether erlang had been installed, or not
@@ -22,14 +30,22 @@
   ignore_errors: yes
   register: arleady_installed
 - name: move source files
-  command: cp /var/tmp/otp_src_18.0 /usr/local/src/otp_src_18.0
-  when: arleady_installed == "/usr/local/bin/erl"
+  become: true
+  become_method: sudo
+  command: cp -rp /var/tmp/otp_src_18.0 /usr/local/src/otp_src_18.0
+  when: arleady_installed|failed
 - name: configure erlang
+  become: true
+  become_method: sudo
   command: chdir=/usr/local/src/otp_src_18.0 ./configure
-  when: arleady_installed == "/usr/local/bin/erl"
-- name: make elixir
+  when: arleady_installed|failed
+- name: make erlang
+  become: true
+  become_method: sudo
   command: chdir=/usr/local/src/otp_src_18.0 make
-  when: arleady_installed == "/usr/local/bin/erl"
-- name: configure erlang
+  when: arleady_installed|failed
+- name: install erlang
+  become: true
+  become_method: sudo
   command: chdir=/usr/local/src/otp_src_18.0 make install
-  when: arleady_installed == "/usr/local/bin/erl"
+  when: arleady_installed|failed

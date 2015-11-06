@@ -1,4 +1,8 @@
 - name: add epel repo
   yum: name=http://ftp.iij.ad.jp/pub/linux/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm state=installed
+  become: true
+  become_method: sudo
 - name: install node.js
   yum: name=nodejs enablerepo=epel state=latest
+  become: true
+  become_method: sudo

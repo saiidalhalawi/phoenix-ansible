@@ -1,5 +1,7 @@
 - name: install required packages
   yum: pkg={{item}} state=installed
+  become: true
+  become_method: sudo
   with_items:
     - unzip
 - name: check whether the source file exists, or not
@@ -13,5 +15,7 @@
   command: unzip /tmp/Precompiled.zip
   when: arleady_exists|failed
 - name: export elixir
+  become: true
+  become_method: sudo
   shell: export PATH="PATH=/opt/elixir/bin:$PATH"
   when: arleady_exists|failed
