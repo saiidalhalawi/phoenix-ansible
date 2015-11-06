@@ -70,5 +70,6 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "provision/sites.yml"
     ansible.inventory_path = "provision/hosts"
     ansible.limit = 'all'
+    ansible.verbose = 'vvv'
   end
 end

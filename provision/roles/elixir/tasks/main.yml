@@ -19,3 +19,13 @@
   become_method: sudo
   shell: export PATH="PATH=/opt/elixir/bin:$PATH"
   when: arleady_exists|failed
+
+- name: is elixir command executable
+  command: which elixir
+  ignore_errors: yes
+  register: executable
+- name: add an alias to elixir execution
+  command: ln -s /usr/bin/ex /usr/bin/elixir
+  become: true
+  become_method: sudo
+  when: executable|failed

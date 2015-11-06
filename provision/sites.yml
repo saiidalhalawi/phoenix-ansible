@@ -1,5 +1,6 @@
 - hosts: vagrant
   user: vagrant
+  gather_facts: no
   tasks:
     - name: git
       yum: name=git update_cache=yes state=latest

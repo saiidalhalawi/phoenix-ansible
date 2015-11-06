@@ -1,10 +1,4 @@
 - name: install hex
-  # XXX Not working below
-  # become: true
-  # become_user: vagrant
-  command: mix local.hex && Y
+  command: /home/vagrant/bin/mix local.hex && Y
 - name: download elixir package
-  # XXX Not working below
-  # become: true
-  # become_user: vagrant
-  command: mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v1.0.3/phoenix_new-1.0.3.ez
+  command: /home/vagrant/bin/mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v1.0.3/phoenix_new-1.0.3.ez
