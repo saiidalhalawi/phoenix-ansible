@@ -24,8 +24,3 @@
   command: which elixir
   ignore_errors: yes
   register: executable
-- name: add an alias to elixir execution
-  command: ln -s /usr/bin/ex /usr/bin/elixir
-  become: true
-  become_method: sudo
-  when: executable|failed
