@@ -19,8 +19,8 @@ defmodule ApiSample.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", ApiSample do
-  #   pipe_through :api
-  # end
+  scope "/api", ApiSample do
+    pipe_through :api
+    resources "/notes", NoteController, only: [:index, :show]
+  end
 end
