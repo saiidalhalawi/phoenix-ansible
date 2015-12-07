@@ -1,0 +1,62 @@
+- include_vars: config/dev.yml
+
+- name: install postgresql
+  yum: name={{ item }} state=latest
+  with_items:
+    - postgresql-server
+    - postgresql-devel
+    - postgresql-contrib
+    - python-psycopg2
+    - libselinux-python
+  become: true
+  become_method: sudo
+
+- name: whether postgresql has been initialized, or not
+  command: ls -l /var/lib/pgsql/data
+  ignore_errors: yes
+  register: initialized
+  become: true
+  become_method: sudo
+
+- name: postgresql initdb
+  shell: service postgresql initdb
+  when: initialized|failed
+  become: true
+  become_method: sudo
+
+- name: start postgresql
+  service: name=postgresql state=started  enabled=yes
+  become: true
+  become_method: sudo
+
+- name: postgres user sudoers
+  lineinfile:
+    dest: /etc/sudoers.d/postgres
+    owner: root
+    group: root
+    mode: 0440
+    line: "%vagrant ALL=(postgres) NOPASSWD: ALL"
+    state: present
+    create: yes
+    validate: "visudo -cf %s"
+  become: true
+  become_method: sudo
+
+- name: create user
+  postgresql_user:
+    db: "{{ dbname }}"
+    name: "{{ dbuser }}"
+    password: "{{ dbpassword }}"
+    priv: ALL
+    state: present
+    login_user: postgres
+  become: true
+  become_method: sudo
+
+- name : create database
+  postgresql_db:
+    name: "{{ dbname }}"
+    encoding: "UTF-8"
+    login_user: postgres
+  become: true
+  become_method: sudo

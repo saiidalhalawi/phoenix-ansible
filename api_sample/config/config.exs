@@ -5,6 +5,22 @@
 # is restricted to this project.
 use Mix.Config
 
+config :api_sample, ApiSample.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "api_sample_repo",
+  username: "user",
+  password: "pass",
+  hostname: "localhost"
+
+
+config :api_sample, ApiSample.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "api_sample",
+  username: "test",
+  password: "testtest",
+  hostname: "localhost"
+
+
 # Configures the endpoint
 config :api_sample, ApiSample.Endpoint,
   url: [host: "localhost"],
