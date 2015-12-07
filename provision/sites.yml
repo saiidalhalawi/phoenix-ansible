@@ -13,3 +13,4 @@
     - role: phoenix
     - role: nodejs
     - role: postgres
+    - role: app
