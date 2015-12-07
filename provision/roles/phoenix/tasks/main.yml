@@ -8,3 +8,9 @@
   args:
     chdir: /home/vagrant
   ignore_errors: yes
+
+- name: install required npm-packages
+  command: npm install
+  args:
+    chdir: /home/vagrant
+  ignore_errors: yes
